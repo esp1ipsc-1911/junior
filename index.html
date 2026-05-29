@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IPSC EM 2026 – Norge Juniorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #B50000;
+  --red-dark: #6B0000;
+  --red-mid: #8C0000;
+  --white: #FFFFFF;
+  --cream: #F5F0EE;
+  --blue: #002868;
+  --text-muted: rgba(255,255,255,0.55);
+  --tab-h: 58px;
+  --header-h: 56px;
+  --card-w: calc(100vw - 48px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background:var(--red-dark);color:#fff;}
+
+/* GRUNGE */
+body::before{content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity:.3;pointer-events:none;z-index:0;}
+
+/* HEADER */
+header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:linear-gradient(180deg,#4a0000,var(--red-dark));border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:100;}
+.hlogo{display:flex;align-items:center;gap:9px;}
+.hflag{width:28px;height:19px;border-radius:2px;overflow:hidden;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.4);}
+.htitle{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.1;}
+.htitle span{display:block;font-size:10px;font-weight:400;letter-spacing:.08em;color:var(--text-muted);}
+.hright{display:flex;flex-direction:column;align-items:flex-end;gap:2px;}
+.hbadge{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);padding:3px 9px;border-radius:20px;color:rgba(255,255,255,.85);}
+#countdown-mini{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,200,100,.85);letter-spacing:.04em;font-weight:600;}
+
+/* MAIN */
+main{position:fixed;top:var(--header-h);bottom:var(--tab-h);left:0;right:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:10;}
+.tab-panel{display:none;} .tab-panel.active{display:block;}
+
+/* NAV */
+nav{position:fixed;bottom:0;left:0;right:0;height:var(--tab-h);background:linear-gradient(0deg,#3a0000,var(--red-dark));border-top:1px solid rgba(255,255,255,0.08);display:flex;z-index:100;}
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;color:var(--text-muted);cursor:pointer;transition:color .2s;padding:6px 0;position:relative;}
+.tab-btn.active{color:#fff;}
+.tab-btn.active::before{content:'';position:absolute;top:0;width:28px;height:2px;background:#fff;border-radius:0 0 2px 2px;}
+.tab-icon{width:20px;height:20px;opacity:.55;transition:opacity .2s;}
+.tab-btn.active .tab-icon{opacity:1;}
+.tab-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;}
+
+/* ══════════════════════════════
+   TAB 1 – HJEM
+══════════════════════════════ */
+.home-wrap{padding:16px 16px 24px;}
+
+/* COUNTDOWN */
+.countdown-card{background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 20px;margin-bottom:14px;position:relative;overflow:hidden;}
+.countdown-card::before{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:radial-gradient(circle,rgba(255,200,100,.15),transparent 70%);pointer-events:none;}
+.cd-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,200,100,.8);margin-bottom:8px;}
+.cd-numbers{display:flex;gap:8px;align-items:flex-end;}
+.cd-unit{text-align:center;}
+.cd-val{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;line-height:1;letter-spacing:-.01em;}
+.cd-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-top:1px;}
+.cd-sep{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:rgba(255,255,255,.3);padding-bottom:6px;}
+.cd-done{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:rgba(255,200,100,.9);}
+
+/* YOUTUBE */
+.yt-section{margin-bottom:14px;}
+.section-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;}
+.yt-wrap{border-radius:12px;overflow:hidden;background:#000;position:relative;padding-top:56.25%;}
+.yt-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+
+/* CHECKLIST */
+.checklist-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;margin-bottom:14px;}
+.cl-item{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;user-select:none;}
+.cl-item:last-child{border-bottom:none;}
+.cl-box{width:18px;height:18px;border-radius:4px;border:1.5px solid rgba(255,255,255,.3);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.cl-item.done .cl-box{background:#4CAF50;border-color:#4CAF50;}
+.cl-check{display:none;} .cl-item.done .cl-check{display:block;}
+.cl-text{font-size:13px;color:rgba(255,255,255,.85);transition:opacity .2s;line-height:1.35;}
+.cl-item.done .cl-text{opacity:.45;text-decoration:line-through;}
+.cl-cat{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);min-width:50px;text-align:right;margin-left:auto;flex-shrink:0;}
+
+/* RANDOM TIP */
+.tip-of-day{background:linear-gradient(135deg,rgba(255,140,66,.12),rgba(255,140,66,.04));border:1px solid rgba(255,140,66,.2);border-radius:14px;padding:14px 16px;margin-bottom:14px;}
+.tod-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,140,66,.8);margin-bottom:6px;}
+.tod-text{font-size:14px;line-height:1.55;color:rgba(255,255,255,.85);}
+.tod-text strong{color:#fff;}
+.tod-refresh{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,140,66,.7);background:none;border:none;cursor:pointer;padding:0;}
+
+/* EASTER EGG */
+.easter-wrap{text-align:center;padding:10px 0;}
+.easter-flag{font-size:28px;cursor:pointer;user-select:none;display:inline-block;transition:transform .1s;}
+.easter-flag:active{transform:scale(.85);}
+#easter-msg{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;color:rgba(255,200,100,.8);height:18px;text-align:center;margin-top:4px;}
+
+/* ══════════════════════════════
+   TAB 2 – KORT (CARD DECK)
+══════════════════════════════ */
+.deck-wrap{padding:20px 16px 24px;display:flex;flex-direction:column;align-items:center;}
+.deck-header{width:100%;display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;}
+.deck-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);}
+.deck-counter{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.05em;}
+
+/* Stack of physical cards – playing card 2:3 ratio, responsive */
+.card-stack{
+  position:relative;
+  width:min(230px, 62vw);
+  height:min(345px, 93vw);
+  margin:0 auto 24px;
+  flex-shrink:0;
+}
+.play-card{
+  position:absolute;
+  top:0;left:0;
+  width:min(230px, 62vw);
+  height:min(345px, 93vw);
+  background:#fff;
+  border-radius:14px;
+  padding:16px 14px 12px;
+  color:#1a1a1a;
+  box-shadow:0 12px 40px rgba(0,0,0,.55),0 3px 10px rgba(0,0,0,.35);
+  border:2px solid rgba(230,230,230,.9);
+  transition:transform .35s cubic-bezier(.25,.46,.45,.94),opacity .35s;
+  will-change:transform;
+  cursor:grab;
+  touch-action:pan-y;
+  user-select:none;
+  overflow:hidden;
+}
+.play-card:active{cursor:grabbing;}
+
+/* card stack depth */
+.play-card.depth-0{z-index:10;transform:rotate(0deg) translateY(0);}
+.play-card.depth-1{z-index:9;transform:rotate(3deg) translateY(8px) translateX(4px);opacity:.82;}
+.play-card.depth-2{z-index:8;transform:rotate(-2deg) translateY(14px) translateX(-3px);opacity:.62;}
+.play-card.depth-3{z-index:7;transform:rotate(4deg) translateY(20px) translateX(5px);opacity:.4;}
+.play-card.hidden{display:none;}
+
+/* card flying out */
+.play-card.fly-left{transform:translateX(-110vw) rotate(-30deg)!important;opacity:0!important;transition:transform .4s cubic-bezier(.55,0,1,.45),opacity .3s;}
+.play-card.fly-right{transform:translateX(110vw) rotate(30deg)!important;opacity:0!important;transition:transform .4s cubic-bezier(.55,0,1,.45),opacity .3s;}
+
+/* card top pip */
+.card-pip{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;opacity:.55;}
+.card-num{position:absolute;top:14px;right:16px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;opacity:.3;}
+
+.play-card .card-heading{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;line-height:1.1;letter-spacing:.01em;margin-bottom:10px;color:#1a1a1a;}
+.play-card .card-body{font-size:12.5px;line-height:1.55;color:rgba(0,0,0,.65);}
+.play-card .card-body strong{color:#1a1a1a;font-weight:600;}
+
+/* accent strip at top of card */
+.card-accent-strip{height:4px;border-radius:12px 12px 0 0;position:absolute;top:0;left:0;right:0;}
+
+/* swipe hint */
+.swipe-hint{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.3);display:flex;align-items:center;gap:8px;}
+.hint-arrow{font-size:16px;animation:bounce-lr 1.6s ease-in-out infinite;}
+@keyframes bounce-lr{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
+
+/* dot indicators */
+.card-dots{display:flex;justify-content:center;gap:5px;padding:14px 0 4px;}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.22);transition:all .25s;cursor:pointer;}
+.dot.active{background:#fff;width:16px;border-radius:3px;}
+
+/* ══════════════════════════════
+   TAB 3 – PROGRAM
+══════════════════════════════ */
+.program-wrap{padding:16px;}
+.squad-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;}
+.squad-tabs::-webkit-scrollbar{display:none;}
+.squad-tab{flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;}
+.squad-tab.active{background:#fff;color:var(--red-dark);border-color:#fff;}
+.squad-panel{display:none;} .squad-panel.active{display:block;}
+.squad-members{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.member-chip{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;display:flex;align-items:center;gap:5px;}
+.chip-cat{font-size:9px;font-weight:700;letter-spacing:.08em;opacity:.6;text-transform:uppercase;}
+
+.day-block{margin-bottom:8px;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);}
+.day-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(255,255,255,.06);cursor:pointer;user-select:none;}
+.day-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.day-date{font-size:11px;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;letter-spacing:.05em;}
+.day-chevron{width:14px;height:14px;opacity:.5;transition:transform .2s;flex-shrink:0;}
+.day-block.open .day-chevron{transform:rotate(180deg);}
+.day-body{display:none;padding:4px 0 8px;}
+.day-block.open .day-body{display:block;}
+
+/* session block */
+.session-block{padding:6px 14px 4px;}
+.session-title{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:4px;border-top:1px solid rgba(255,255,255,.06);padding-top:6px;}
+.stage-row{display:flex;align-items:center;gap:0;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.stage-row:last-child{border-bottom:none;}
+.sr-time{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,.45);min-width:46px;flex-shrink:0;}
+.sr-stage{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.05em;background:rgba(255,255,255,.1);padding:2px 8px;border-radius:4px;margin-right:8px;flex-shrink:0;}
+.sr-desc{font-size:12px;color:rgba(255,255,255,.7);flex:1;}
+.sr-first{background:rgba(255,200,100,.2);color:rgba(255,200,100,.95);}
+.lunch-row{display:flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(255,255,255,.03);}
+.lunch-icon{font-size:13px;}
+.lunch-text{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+
+/* ══════════════════════════════
+   TAB 4 – VÆR
+══════════════════════════════ */
+.weather-wrap{padding:16px;}
+.wloc{margin-bottom:16px;}
+.wplace{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;letter-spacing:.02em;}
+.wcountry{font-size:12px;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;}
+
+/* Loading */
+.w-loading{text-align:center;padding:32px 0;font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--text-muted);letter-spacing:.06em;}
+.w-error{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px;text-align:center;font-size:13px;color:rgba(255,255,255,.6);}
+
+/* Forecast row */
+.forecast-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.fc-day{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;}
+.fc-date{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;min-width:80px;}
+.fc-date .wd{font-size:11px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;}
+.fc-icon{font-size:26px;min-width:32px;text-align:center;}
+.fc-temps{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;flex:1;}
+.fc-temps .hi{color:#fff;}
+.fc-temps .lo{color:var(--text-muted);font-size:13px;margin-left:4px;}
+.fc-extra{text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--text-muted);letter-spacing:.04em;line-height:1.4;}
+.fc-day.today{border-color:rgba(255,200,100,.3);background:rgba(255,200,100,.06);}
+
+.yr-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 20px;background:#fff;color:var(--red-dark);border:none;border-radius:12px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;margin-bottom:14px;}
+
+.tip-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;margin-bottom:8px;}
+.tip-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.tip-icon{width:16px;height:16px;flex-shrink:0;opacity:.75;}
+.tip-card-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.tip-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.tip-list li{font-size:13px;line-height:1.5;color:rgba(255,255,255,.78);padding-left:12px;position:relative;}
+.tip-list li::before{content:'–';position:absolute;left:0;color:rgba(255,255,255,.3);}
+.tip-list strong{color:#fff;font-weight:600;}
+
+main::-webkit-scrollbar{width:3px;}
+main::-webkit-scrollbar-track{background:transparent;}
+main::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hlogo">
+    <svg class="hflag" viewBox="0 0 28 19" xmlns="http://www.w3.org/2000/svg">
+      <rect width="28" height="19" fill="#EF2B2D"/>
+      <rect x="7" width="4" height="19" fill="#fff"/>
+      <rect y="7.5" width="28" height="4" fill="#fff"/>
+      <rect x="8.3" width="1.4" height="19" fill="#002868"/>
+      <rect y="8.8" width="28" height="1.4" fill="#002868"/>
+    </svg>
+    <div>
+      <div class="htitle">Norge Juniorer<span>IPSC EM 2026 · Buzsák, Ungarn</span></div>
+    </div>
+  </div>
+  <div class="hright">
+    <div class="hbadge">8–12 JUN</div>
+    <div id="countdown-mini">laster...</div>
+  </div>
+</header>
+
+<main id="main-scroll">
+
+<!-- ═══════════════════════════
+     TAB 1 – HJEM
+═══════════════════════════ -->
+<div class="tab-panel active" id="panel-hjem">
+<div class="home-wrap">
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-card">
+    <div class="cd-label">⏱ Nedtelling til EM</div>
+    <div id="cd-display"></div>
+  </div>
+
+  <!-- YOUTUBE -->
+  <div class="yt-section">
+    <div class="section-label">Level 3 EHC Warm Up</div>
+    <div class="yt-wrap">
+      <iframe src="https://www.youtube.com/embed/Uokjm_oUPk4?rel=0&modestbranding=1"
+        allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- DAILY TIP -->
+  <div class="tip-of-day">
+    <div class="tod-label">💡 Dagens tips</div>
+    <div class="tod-text" id="tod-text"></div>
+    <button class="tod-refresh" onclick="newTip()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+      Nytt tips
+    </button>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="section-label">📦 Pakkeliste til EM</div>
+  <div class="checklist-card">
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Pistol + holster</span>
+      <span class="cl-cat">Utstyr</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Magasiner (minimum 6)</span>
+      <span class="cl-cat">Utstyr</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Belte + magasinlommer</span>
+      <span class="cl-cat">Utstyr</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Landslagstrøye</span>
+      <span class="cl-cat">Utstyr</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Ørepropper + skytebriller</span>
+      <span class="cl-cat">Utstyr</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Solkrem SPF 50+ (stor tube)</span>
+      <span class="cl-cat">Helse</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Solhatt / caps</span>
+      <span class="cl-cat">Helse</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Vannflaske 1L+ (2 stk)</span>
+      <span class="cl-cat">Helse</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Elektrolytter / sportsdrikk</span>
+      <span class="cl-cat">Helse</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Snacks: nøtter, banan, energibar</span>
+      <span class="cl-cat">Mat</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Pass + reisedokumenter</span>
+      <span class="cl-cat">Reise</span>
+    </div>
+    <div class="cl-item" onclick="toggleCheck(this)">
+      <div class="cl-box"><svg class="cl-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <span class="cl-text">Ladere + powerbank</span>
+      <span class="cl-cat">Reise</span>
+    </div>
+  </div>
+
+  <!-- EASTER EGG -->
+  <div class="easter-wrap">
+    <div class="easter-flag" id="easter-flag" onclick="easterClick()">🇳🇴</div>
+    <div id="easter-msg"></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════
+     TAB 2 – MOTIVASJONSKORT
+═══════════════════════════ -->
+<div class="tab-panel" id="panel-kort">
+<div class="deck-wrap">
+  <div class="deck-header">
+    <span class="deck-title">Motivasjonskort</span>
+    <span class="deck-counter" id="deck-counter">1 / 24</span>
+  </div>
+
+  <div class="card-stack" id="card-stack"></div>
+
+  <div class="swipe-hint">
+    <span>←</span> Sveip for neste <span class="hint-arrow">→</span>
+  </div>
+  <div class="card-dots" id="card-dots"></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════
+     TAB 3 – PROGRAM
+═══════════════════════════ -->
+<div class="tab-panel" id="panel-program">
+<div class="program-wrap">
+  <div class="squad-tabs" id="squad-tabs">
+    <button class="squad-tab active" onclick="showSquad('sq72',this)">Squad 72</button>
+    <button class="squad-tab" onclick="showSquad('sq97',this)">Squad 97</button>
+    <button class="squad-tab" onclick="showSquad('sq114',this)">Squad 114</button>
+  </div>
+
+  <!-- SQUAD 72 -->
+  <div class="squad-panel active" id="sq72">
+    <div class="section-label">Skyttere</div>
+    <div class="squad-members">
+      <div class="member-chip">Kåsin Sebastian <span class="chip-cat">SJ</span></div>
+      <div class="member-chip">Nordhagen Larsen Mathias <span class="chip-cat">SJ</span></div>
+      <div class="member-chip">Ryen Jakob <span class="chip-cat">J</span></div>
+      <div class="member-chip">Kjøren Per-Kristian <span class="chip-cat">SJ</span></div>
+    </div>
+    <div class="section-label" style="margin-bottom:10px">PDO · Team Super Junior / Junior</div>
+
+    <!-- SQ72 dag 1 -->
+    <div class="day-block open" id="72d1">
+      <div class="day-header" onclick="toggleDay('72d1')">
+        <div><div class="day-name">Dag 1 – Mandag</div><div class="day-date">8. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T1 – Stage 13–18</div>
+          <div class="stage-row"><span class="sr-time">13:20</span><span class="sr-stage sr-first">St. 13</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">13:45</span><span class="sr-stage">St. 14</span><span class="sr-desc">Roterer videre</span></div>
+          <div class="stage-row"><span class="sr-time">14:10</span><span class="sr-stage">St. 15</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:35</span><span class="sr-stage">St. 16</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:00</span><span class="sr-stage">St. 17</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:25</span><span class="sr-stage">St. 18</span><span class="sr-desc">Siste stage dag 1 ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SQ72 dag 2 -->
+    <div class="day-block" id="72d2">
+      <div class="day-header" onclick="toggleDay('72d2')">
+        <div><div class="day-name">Dag 2 – Tirsdag</div><div class="day-date">9. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T2 – Stage 07–12</div>
+          <div class="stage-row"><span class="sr-time">15:50</span><span class="sr-stage sr-first">St. 07</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">16:15</span><span class="sr-stage">St. 08</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">16:40</span><span class="sr-stage">St. 09</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:05</span><span class="sr-stage">St. 10</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:30</span><span class="sr-stage">St. 11</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:55</span><span class="sr-stage">St. 12</span><span class="sr-desc">Siste stage dag 2 ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SQ72 dag 3 -->
+    <div class="day-block" id="72d3">
+      <div class="day-header" onclick="toggleDay('72d3')">
+        <div><div class="day-name">Dag 3 – Onsdag</div><div class="day-date">10. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Morgen T1 – Stage 19–24</div>
+          <div class="stage-row"><span class="sr-time">07:20</span><span class="sr-stage sr-first">St. 19</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">07:45</span><span class="sr-stage">St. 20</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">08:10</span><span class="sr-stage">St. 21</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">08:35</span><span class="sr-stage">St. 22</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">09:00</span><span class="sr-stage">St. 23</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">09:25</span><span class="sr-stage">St. 24</span><span class="sr-desc">Ferdig morgen ✓</span></div>
+        </div>
+        <div class="lunch-row"><span class="lunch-icon">🍽</span><span class="lunch-text">Fri resten av dagen</span></div>
+      </div>
+    </div>
+
+    <!-- SQ72 dag 4 -->
+    <div class="day-block" id="72d4">
+      <div class="day-header" onclick="toggleDay('72d4')">
+        <div><div class="day-name">Dag 4 – Torsdag</div><div class="day-date">11. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Morgen T2 – Stage 13–18</div>
+          <div class="stage-row"><span class="sr-time">09:50</span><span class="sr-stage sr-first">St. 13</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">10:15</span><span class="sr-stage">St. 14</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">10:40</span><span class="sr-stage">St. 15</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:05</span><span class="sr-stage">St. 16</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:30</span><span class="sr-stage">St. 17</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:55</span><span class="sr-stage">St. 18</span><span class="sr-desc">Ferdig morgen ✓</span></div>
+        </div>
+        <div class="lunch-row"><span class="lunch-icon">🍽</span><span class="lunch-text">Lunsj 12:20–13:20</span></div>
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T1 – Stage 19–24</div>
+          <div class="stage-row"><span class="sr-time">13:20</span><span class="sr-stage sr-first">St. 19</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">13:45</span><span class="sr-stage">St. 20</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:10</span><span class="sr-stage">St. 21</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:35</span><span class="sr-stage">St. 22</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:00</span><span class="sr-stage">St. 23</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:25</span><span class="sr-stage">St. 24</span><span class="sr-desc">Ferdig ettermiddag ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SQ72 dag 5 -->
+    <div class="day-block" id="72d5">
+      <div class="day-header" onclick="toggleDay('72d5')">
+        <div><div class="day-name">Dag 5 – Fredag</div><div class="day-date">12. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T1 – Stage 01–06</div>
+          <div class="stage-row"><span class="sr-time">13:20</span><span class="sr-stage sr-first">St. 01</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">13:45</span><span class="sr-stage">St. 02</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:10</span><span class="sr-stage">St. 03</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:35</span><span class="sr-stage">St. 04</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:00</span><span class="sr-stage">St. 05</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:25</span><span class="sr-stage">St. 06</span><span class="sr-desc">Alle 24 stages ferdig! 🏆</span></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /sq72 -->
+
+  <!-- SQUAD 97 -->
+  <div class="squad-panel" id="sq97">
+    <div class="section-label">Skyttere</div>
+    <div class="squad-members">
+      <div class="member-chip">Sollyst Adelén <span class="chip-cat">LSJ</span></div>
+      <div class="member-chip">Thorud Henrik B. <span class="chip-cat">SJ</span></div>
+      <div class="member-chip">Helland Noah Valentin <span class="chip-cat">GJ</span></div>
+      <div class="member-chip">Alforte Aljoneil <span class="chip-cat">GJ</span></div>
+    </div>
+    <div class="section-label" style="margin-bottom:10px">PDO · Super Junior / Grand Junior</div>
+
+    <div class="day-block open" id="97d1">
+      <div class="day-header" onclick="toggleDay('97d1')">
+        <div><div class="day-name">Dag 1 – Mandag</div><div class="day-date">8. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T2 – Stage 01–06</div>
+          <div class="stage-row"><span class="sr-time">15:50</span><span class="sr-stage sr-first">St. 01</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">16:15</span><span class="sr-stage">St. 02</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">16:40</span><span class="sr-stage">St. 03</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:05</span><span class="sr-stage">St. 04</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:30</span><span class="sr-stage">St. 05</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:55</span><span class="sr-stage">St. 06</span><span class="sr-desc">Siste stage dag 1 ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block" id="97d2">
+      <div class="day-header" onclick="toggleDay('97d2')">
+        <div><div class="day-name">Dag 2 – Tirsdag</div><div class="day-date">9. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Morgen T1 – Stage 01–06</div>
+          <div class="stage-row"><span class="sr-time">07:20</span><span class="sr-stage sr-first">St. 01</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">07:45</span><span class="sr-stage">St. 02</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">08:10</span><span class="sr-stage">St. 03</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">08:35</span><span class="sr-stage">St. 04</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">09:00</span><span class="sr-stage">St. 05</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">09:25</span><span class="sr-stage">St. 06</span><span class="sr-desc">Ferdig morgen ✓</span></div>
+        </div>
+        <div class="lunch-row"><span class="lunch-icon">🍽</span><span class="lunch-text">Fri resten av dagen</span></div>
+      </div>
+    </div>
+
+    <div class="day-block" id="97d3">
+      <div class="day-header" onclick="toggleDay('97d3')">
+        <div><div class="day-name">Dag 3 – Onsdag</div><div class="day-date">10. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Morgen T2 – Stage 07–12</div>
+          <div class="stage-row"><span class="sr-time">09:50</span><span class="sr-stage sr-first">St. 07</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">10:15</span><span class="sr-stage">St. 08</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">10:40</span><span class="sr-stage">St. 09</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:05</span><span class="sr-stage">St. 10</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:30</span><span class="sr-stage">St. 11</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:55</span><span class="sr-stage">St. 12</span><span class="sr-desc">Ferdig morgen ✓</span></div>
+        </div>
+        <div class="lunch-row"><span class="lunch-icon">🍽</span><span class="lunch-text">Lunsj 12:20–13:20</span></div>
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T1 – Stage 13–18</div>
+          <div class="stage-row"><span class="sr-time">13:20</span><span class="sr-stage sr-first">St. 13</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">13:45</span><span class="sr-stage">St. 14</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:10</span><span class="sr-stage">St. 15</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:35</span><span class="sr-stage">St. 16</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:00</span><span class="sr-stage">St. 17</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:25</span><span class="sr-stage">St. 18</span><span class="sr-desc">Ferdig ettermiddag ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block" id="97d4">
+      <div class="day-header" onclick="toggleDay('97d4')">
+        <div><div class="day-name">Dag 4 – Torsdag</div><div class="day-date">11. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T1 – Stage 19–24</div>
+          <div class="stage-row"><span class="sr-time">13:20</span><span class="sr-stage sr-first">St. 19</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">13:45</span><span class="sr-stage">St. 20</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:10</span><span class="sr-stage">St. 21</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:35</span><span class="sr-stage">St. 22</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:00</span><span class="sr-stage">St. 23</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:25</span><span class="sr-stage">St. 24</span><span class="sr-desc">Ferdig ettermiddag ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block" id="97d5">
+      <div class="day-header" onclick="toggleDay('97d5')">
+        <div><div class="day-name">Dag 5 – Fredag</div><div class="day-date">12. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T2 – Stage 19–24</div>
+          <div class="stage-row"><span class="sr-time">15:50</span><span class="sr-stage sr-first">St. 19</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">16:15</span><span class="sr-stage">St. 20</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">16:40</span><span class="sr-stage">St. 21</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:05</span><span class="sr-stage">St. 22</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:30</span><span class="sr-stage">St. 23</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:55</span><span class="sr-stage">St. 24</span><span class="sr-desc">Alle 24 stages ferdig! 🏆</span></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /sq97 -->
+
+  <!-- SQUAD 114 -->
+  <div class="squad-panel" id="sq114">
+    <div class="section-label">Skyttere</div>
+    <div class="squad-members">
+      <div class="member-chip">Kjøren Kjeld Joakim <span class="chip-cat">GJ</span></div>
+    </div>
+    <div class="section-label" style="margin-bottom:10px">Optics · Grand Junior · Squad 114</div>
+
+    <div class="day-block open" id="114d1">
+      <div class="day-header" onclick="toggleDay('114d1')">
+        <div><div class="day-name">Dag 1 – Mandag</div><div class="day-date">8. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T2 – Stage 19–24</div>
+          <div class="stage-row"><span class="sr-time">15:50</span><span class="sr-stage sr-first">St. 19</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">16:15</span><span class="sr-stage">St. 20</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">16:40</span><span class="sr-stage">St. 21</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:05</span><span class="sr-stage">St. 22</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:30</span><span class="sr-stage">St. 23</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:55</span><span class="sr-stage">St. 24</span><span class="sr-desc">Siste stage dag 1 ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block" id="114d2">
+      <div class="day-header" onclick="toggleDay('114d2')">
+        <div><div class="day-name">Dag 2 – Tirsdag</div><div class="day-date">9. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Morgen T1 – Stage 19–24</div>
+          <div class="stage-row"><span class="sr-time">07:20</span><span class="sr-stage sr-first">St. 19</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">07:45</span><span class="sr-stage">St. 20</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">08:10</span><span class="sr-stage">St. 21</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">08:35</span><span class="sr-stage">St. 22</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">09:00</span><span class="sr-stage">St. 23</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">09:25</span><span class="sr-stage">St. 24</span><span class="sr-desc">Ferdig morgen ✓</span></div>
+        </div>
+        <div class="lunch-row"><span class="lunch-icon">🍽</span><span class="lunch-text">Fri resten av dagen</span></div>
+      </div>
+    </div>
+
+    <div class="day-block" id="114d3">
+      <div class="day-header" onclick="toggleDay('114d3')">
+        <div><div class="day-name">Dag 3 – Onsdag</div><div class="day-date">10. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Morgen T2 – Stage 01–06</div>
+          <div class="stage-row"><span class="sr-time">09:50</span><span class="sr-stage sr-first">St. 01</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">10:15</span><span class="sr-stage">St. 02</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">10:40</span><span class="sr-stage">St. 03</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:05</span><span class="sr-stage">St. 04</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:30</span><span class="sr-stage">St. 05</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">11:55</span><span class="sr-stage">St. 06</span><span class="sr-desc">Ferdig morgen ✓</span></div>
+        </div>
+        <div class="lunch-row"><span class="lunch-icon">🍽</span><span class="lunch-text">Lunsj 12:20–13:20</span></div>
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T1 – Stage 07–12</div>
+          <div class="stage-row"><span class="sr-time">13:20</span><span class="sr-stage sr-first">St. 07</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">13:45</span><span class="sr-stage">St. 08</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:10</span><span class="sr-stage">St. 09</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">14:35</span><span class="sr-stage">St. 10</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:00</span><span class="sr-stage">St. 11</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">15:25</span><span class="sr-stage">St. 12</span><span class="sr-desc">Ferdig ettermiddag ✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block" id="114d4">
+      <div class="day-header" onclick="toggleDay('114d4')">
+        <div><div class="day-name">Dag 4 – Torsdag</div><div class="day-date">11. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Morgen T1 – Stage 13–18</div>
+          <div class="stage-row"><span class="sr-time">07:20</span><span class="sr-stage sr-first">St. 13</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">07:45</span><span class="sr-stage">St. 14</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">08:10</span><span class="sr-stage">St. 15</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">08:35</span><span class="sr-stage">St. 16</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">09:00</span><span class="sr-stage">St. 17</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">09:25</span><span class="sr-stage">St. 18</span><span class="sr-desc">Ferdig morgen ✓</span></div>
+        </div>
+        <div class="lunch-row"><span class="lunch-icon">🍽</span><span class="lunch-text">Fri resten av dagen</span></div>
+      </div>
+    </div>
+
+    <div class="day-block" id="114d5">
+      <div class="day-header" onclick="toggleDay('114d5')">
+        <div><div class="day-name">Dag 5 – Fredag</div><div class="day-date">12. juni 2026</div></div>
+        <svg class="day-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="day-body">
+        <div class="session-block">
+          <div class="session-title">Ettermiddag T2 – Stage 13–18</div>
+          <div class="stage-row"><span class="sr-time">15:50</span><span class="sr-stage sr-first">St. 13</span><span class="sr-desc">Starter her 🔫</span></div>
+          <div class="stage-row"><span class="sr-time">16:15</span><span class="sr-stage">St. 14</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">16:40</span><span class="sr-stage">St. 15</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:05</span><span class="sr-stage">St. 16</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:30</span><span class="sr-stage">St. 17</span><span class="sr-desc"></span></div>
+          <div class="stage-row"><span class="sr-time">17:55</span><span class="sr-stage">St. 18</span><span class="sr-desc">Alle 24 stages ferdig! 🏆</span></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /sq114 -->
+
+</div>
+</div>
+
+<!-- ═══════════════════════════
+     TAB 4 – VÆR
+═══════════════════════════ -->
+<div class="tab-panel" id="panel-vaer">
+<div class="weather-wrap">
+  <div class="wloc">
+    <div class="wplace">Buzsák</div>
+    <div class="wcountry">Somogy · Ungarn · 127 moh.</div>
+  </div>
+
+  <div id="weather-content"><div class="w-loading">Henter værdata...</div></div>
+
+  <a class="yr-btn" href="https://www.yr.no/nb/værvarsel/daglig-tabell/2-3054552/Ungarn/Somogy/Buzs%C3%A1k" target="_blank">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+    Åpne fullvarsel på Yr.no
+  </a>
+
+  <div class="tip-card">
+    <div class="tip-card-header">
+      <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <div class="tip-card-title">Sol & Varme</div>
+    </div>
+    <ul class="tip-list">
+      <li>Forventet <strong>28–35°C</strong> i skyteperioden</li>
+      <li>SPF 50+ – på 30 min før, repeter etter lunsj</li>
+      <li>Solhatt / caps er et must på banen</li>
+      <li><strong>0,5 l vann per time</strong> – ikke vent til du tørster</li>
+    </ul>
+  </div>
+
+</div>
+</div>
+
+</main>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav>
+  <button class="tab-btn active" id="tab-hjem" onclick="switchTab('hjem')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="tab-label">Hjem</span>
+  </button>
+  <button class="tab-btn" id="tab-kort" onclick="switchTab('kort')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+    <span class="tab-label">Fokus</span>
+  </button>
+  <button class="tab-btn" id="tab-program" onclick="switchTab('program')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span class="tab-label">Program</span>
+  </button>
+  <button class="tab-btn" id="tab-vaer" onclick="switchTab('vaer')">
+    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+    <span class="tab-label">Vær</span>
+  </button>
+</nav>
+
+<script>
+// ══ CARD DATA ══
+const CARDS_DATA = [
+  // ── MENTALT ──
+  { cat:'Mental forberedelse', color:'#E8872A', heading:'Visualiser banen\nfør du skyter', body:'Gå gjennom hele stage mentalt <strong>minst to ganger</strong> før du er on deck. Se for deg hvert target, skuddvinkler og beina dine.<br><br>En tydelig plan = roligere hode i bua.' },
+  { cat:'Fokus', color:'#D4A017', heading:'Én tanke\ninn i bua', body:'Velg <strong>ett fokusord</strong> du bruker hver gang du tar kommando. «Sikt», «flyt», «rolig» – noe som er ditt.<br><br>Alt annet kobles ut. Bare det ordet.' },
+  { cat:'Mental reset', color:'#4A90D9', heading:'Feil skjer.\nGlem det nå.', body:'Ett dårlig skudd er <strong>ikke en dårlig stage</strong>. Pust ut, slipp det, jobb videre.<br><br>De beste skytterne skiller seg ut etter en feil – ikke på de gode skuddene.' },
+  { cat:'Prestasjon', color:'#E54B6A', heading:'Adrenalinen\ner din venn', body:'Nervøsitet betyr at du bryr deg – <strong>det er et godt tegn.</strong><br><br>Pust dypt ned i magen, roter skuldrene og si: «Jeg er klar.» Kroppen lytter.' },
+  { cat:'Mindset', color:'#F97316', heading:'Prosess,\nikke resultat', body:'Ikke tenk på plasseringen mens du skyter. <strong>Fokuser på det du kontrollerer:</strong> timing, sikt, trigger.<br><br>Poengene tar vare på seg selv.' },
+  { cat:'Nervøsitet', color:'#A855F7', heading:'Pust deg\nrolig', body:'Box breathing: <strong>Inn 4 sek → hold 4 sek → ut 4 sek → hold 4 sek.</strong><br><br>Gjør dette to ganger på on-deck og kjenn skuldrene slippe.' },
+  { cat:'Selvtillit', color:'#10B981', heading:'Du har\ntrent for dette', body:'Du er ikke her ved en tilfeldighet. Hvert steg du har tatt frem til EM har gjort deg klar.<br><br><strong>Stol på treningen din.</strong>' },
+  { cat:'Konsentrasjon', color:'#3B82F6', heading:'Én stage\nom gangen', body:'Ikke tenk på neste stage når du er på denne. Ikke tenk på gårsdagens resultater.<br><br><strong>Alt som finnes er de neste sekundene.</strong>' },
+  // ── TEKNISK ──
+  { cat:'Teknisk', color:'#8B5CF6', heading:'Reload er\nikke pause', body:'Trener du reloads hjemme gjør kroppen det automatisk under press. <strong>Øvelse = frihet.</strong><br><br>Hold øynene fremover mot neste target mens henda gjør jobben.' },
+  { cat:'Skyteteknikk', color:'#6366F1', heading:'Sight picture\nfør du trykker', body:'Det viktigste skuddøyeblikket: <strong>ser du siktebildet klart?</strong><br><br>Et halvtenkt skudd tar like lang tid som et godt skudd – men gir halvparten av poengene.' },
+  { cat:'Bevegelse', color:'#0EA5E9', heading:'Raske bein,\nrolige hender', body:'Hastigheten din mellom targets skal ikke smitte over på henda.<br><br><strong>Bein bremser → hender stabiliserer → skyting.</strong> I den rekkefølgen, alltid.' },
+  { cat:'Stage planning', color:'#14B8A6', heading:'Les banen\n3 ganger', body:'1. <strong>Targets og krav</strong> – hva må treffes og hvordan.<br>2. <strong>Ruten din</strong> – beinarbeid og posisjoner.<br>3. <strong>Reloads</strong> – når og hvor.<br><br>Deretter: commit til planen.' },
+  { cat:'Teknisk', color:'#F59E0B', heading:'Grip som\nfor livet', body:'En konsistent, hard grip eliminerer muzzle flip og gir raskere follow-up skudd.<br><br><strong>Klem pistolen som om du ikke vil at den skal gå noe sted.</strong>' },
+  { cat:'Trigger', color:'#EF4444', heading:'Surprise break\ner din venn', body:'Ikke forutse skuddet – <strong>la det komme av seg selv</strong> mens du presserjevnt bakover.<br><br>Anticipation er grunnen til at skudd går lavt og til venstre.' },
+  // ── HELSE ──
+  { cat:'Helse · Sol', color:'#FBBF24', heading:'SPF 50+\nhver morgen', body:'Ungarn i juni: opp mot <strong>35°C</strong> og sterk UV. Påfør solkrem 30 min før du går ut – ansikt, nakke, armer, hender.<br><br>Repeter etter lunsj. Caps er et must.' },
+  { cat:'Helse · Drikke', color:'#38B2C8', heading:'Drikk før\ndu tørster', body:'<strong>Mål: 0,5 l per time</strong> på banen. Tørst = allerede dehydrert.<br><br>✓ Vann + elektrolytter<br>✗ Unngå brus, sukker og energidrikk<br><br>Ta med minst 2 liter fra hotellet.' },
+  { cat:'Helse · Mat', color:'#52B76A', heading:'Mat for\nhele dagen', body:'<strong>Morgen:</strong> Havregrøt, egg, brød.<br><strong>Banen:</strong> Banan, nøtter, energibar.<br><strong>Lunsj:</strong> Moderat – stort måltid = trøtt kropp.<br><strong>Kveld:</strong> Protein + karbo for restitusjon.' },
+  { cat:'Restitusjon', color:'#7C5CBA', heading:'Søvn er\ntrening', body:'Kroppen reparerer seg om natten. <strong>Minst 8 timer</strong> – særlig kvelden før skytedagen.<br><br>Legg bort telefonen 30 min før. Kult rom = bedre søvn.' },
+  { cat:'Helse · Varme', color:'#F97316', heading:'Varm opp\nkroppen', body:'Ikke hopp rett inn i stage uten oppvarming. <strong>5 min lett jogg, skulderrotasjon, håndrotasjon.</strong><br><br>Varme muskler reagerer raskere og gir færre skader.' },
+  { cat:'Helse · Øyne', color:'#06B6D4', heading:'Skytebriller\naltid på', body:'Ikke bare regelverk – <strong>øynene dine er uvurderlige.</strong><br><br>Sørg for at glassene sitter godt og ikke dugger. Medfølger cap, er det enda bedre.' },
+  // ── KONKURRANSEDAG ──
+  { cat:'Konkurransedag', color:'#84CC16', heading:'Morgenrutine\ner din superkraft', body:'Stå opp i god tid. Spis ordentlig. Sjekk utstyr <strong>kvelden før</strong> – ikke om morgen.<br><br>En rolig morgen = rolig hode i bua.' },
+  { cat:'Utstyr', color:'#FB923C', heading:'Sjekk utstyr\nkveld før', body:'Magasiner lastet? Holster strammet? Belte riktig montert?<br><br><strong>Utstyrssvikt på stage koster mer enn en trening-sesjon.</strong> Sjekk om kvelden, ikke om morgenen.' },
+  { cat:'Lagånd', color:'#EC4899', heading:'Heie på\nhverandre', body:'Når du venter på tur: <strong>heie på lagkameratene dine.</strong><br><br>Et lag som støtter hverandre presterer bedre. Din entusiasme løfter alle – også deg selv.' },
+  { cat:'Norge · Lagånd', color:'#CC1111', heading:'Vi er her\nfor en grunn', body:'Du representerer Norge på <strong>Europamesterskapet</strong>. Du er ikke her ved en tilfeldighet.<br><br>Nyt det. Støtt lagkameratene. Resultatene tar vare på seg selv.' }
+];
+
+const TIPS = [
+  'Visualiser tre ganger: <strong>plan A</strong> (optimal), <strong>plan B</strong> (hvis du misser en posisjon) og <strong>plan C</strong> (nødstrategi). Beste skytterne har alltid en backup.',
+  'Etter hvert stage: <strong>tre dype pust</strong> før du evaluerer. Aldri analyser mens adrenalinen fortsatt pumper.',
+  'Høyt tempo mellom targets ≠ hastverk. <strong>Raske bein, rolige hender</strong> – det er formelen.',
+  'Drikk <strong>500 ml</strong> til frokost hver dag på EM, uansett om du er tørst eller ikke.',
+  'Solkrem på <strong>ørene og baksiden av nakken</strong> – de glemte stedene som brenner.',
+  'Sov på kompassretningen <strong>nord-sør</strong> – kroppen hviler bedre. Kanskje myte, kanskje ikke – men det er gratis å prøve!',
+  'Bekymring er å betale for noe som kanskje aldri skjer. <strong>Fokuser på det du kontrollerer.</strong>',
+  '<strong>Power pose</strong> på toalettet rett før du skyter: 2 minutter med rak rygg og skuldrene tilbake. Senker kortisol.',
+  'Energibar <strong>30 min før</strong> du er on deck – ikke rett før. Sukkertopp og -dal midt i stage er ingen god kombinasjon.',
+  'Hvis du hører noen si «det var bare en test» – <strong>det er aldri bare en test.</strong> Skill med respekt.'
+];
+
+// ══ TAB SWITCHING ══
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('main-scroll').scrollTop = 0;
+  if (name === 'vaer') loadWeather();
+}
+
+// ══ SQUAD TABS ══
+function showSquad(id, btn) {
+  document.querySelectorAll('.squad-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.squad-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ══ ACCORDION ══
+function toggleDay(id) { document.getElementById(id).classList.toggle('open'); }
+
+// ══ COUNTDOWN ══
+function updateCountdown() {
+  const target = new Date('2026-06-08T07:20:00+02:00');
+  const now = new Date();
+  const diff = target - now;
+  const mini = document.getElementById('countdown-mini');
+  const display = document.getElementById('cd-display');
+  if (diff <= 0) {
+    if (mini) mini.textContent = '🔫 EM pågår!';
+    if (display) display.innerHTML = '<div class="cd-done">🔫 EM pågår nå!</div>';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  if (mini) mini.textContent = `${d}d ${h}t til EM`;
+  if (display) display.innerHTML = `
+    <div class="cd-numbers">
+      <div class="cd-unit"><div class="cd-val">${d}</div><div class="cd-lbl">Dager</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-val">${String(h).padStart(2,'0')}</div><div class="cd-lbl">Timer</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-val">${String(m).padStart(2,'0')}</div><div class="cd-lbl">Min</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><div class="cd-val">${String(s).padStart(2,'0')}</div><div class="cd-lbl">Sek</div></div>
+    </div>`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ══ DAILY TIP ══
+let tipIdx = Math.floor(Math.random() * TIPS.length);
+function newTip() { tipIdx = (tipIdx + 1) % TIPS.length; document.getElementById('tod-text').innerHTML = TIPS[tipIdx]; }
+document.getElementById('tod-text').innerHTML = TIPS[tipIdx];
+
+// ══ CHECKLIST ══
+function toggleCheck(el) { el.classList.toggle('done'); }
+
+// ══ EASTER EGG ══
+let easterCount = 0;
+const easterMsgs = ['🇳🇴','🎯 Fokus!','💪 Du klarer det!','🔫 Smooth & fast!','🏆 EM-gull?','⭐ Norge er best!'];
+function easterClick() {
+  easterCount++;
+  const msg = document.getElementById('easter-msg');
+  const flag = document.getElementById('easter-flag');
+  if (easterCount >= 5) {
+    msg.textContent = '🎉 NORGE NORGE NORGE! 🎉';
+    flag.style.animation = 'spin 0.5s ease';
+    setTimeout(()=>{ flag.style.animation=''; easterCount=0; msg.textContent=''; }, 2000);
+  } else {
+    msg.textContent = easterMsgs[easterCount] || '';
+  }
+}
+
+// ══ CARD DECK ══
+const stack = document.getElementById('card-stack');
+const dotsEl = document.getElementById('card-dots');
+const counterEl = document.getElementById('deck-counter');
+let cardCurrent = 0;
+let cardElements = [];
+
+function buildDeck() {
+  stack.innerHTML = '';
+  dotsEl.innerHTML = '';
+  cardElements = [];
+  CARDS_DATA.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'play-card';
+    el.innerHTML = `
+      <div class="card-accent-strip" style="background:${c.color}"></div>
+      <div class="card-pip" style="color:${c.color}">${c.cat}</div>
+      <div class="card-num">${i+1}/${CARDS_DATA.length}</div>
+      <div class="card-heading">${c.heading.replace('\n','<br>')}</div>
+      <div class="card-body">${c.body}</div>`;
+    stack.appendChild(el);
+    cardElements.push(el);
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    dot.onclick = () => jumpTo(i);
+    dotsEl.appendChild(dot);
+  });
+  updateStack();
+  addCardListeners();
+}
+
+function updateStack() {
+  const total = CARDS_DATA.length;
+  cardElements.forEach((el, i) => {
+    el.classList.remove('depth-0','depth-1','depth-2','depth-3','hidden','fly-left','fly-right');
+    const rel = (i - cardCurrent + total) % total;
+    if (rel === 0) el.classList.add('depth-0');
+    else if (rel === 1) el.classList.add('depth-1');
+    else if (rel === 2) el.classList.add('depth-2');
+    else if (rel === 3) el.classList.add('depth-3');
+    else el.classList.add('hidden');
+  });
+  counterEl.textContent = (cardCurrent + 1) + ' / ' + total;
+  document.querySelectorAll('#card-dots .dot').forEach((d,i)=>{
+    d.classList.toggle('active', i === cardCurrent);
+  });
+}
+
+function jumpTo(idx) { cardCurrent = idx; updateStack(); }
+
+function throwCard(dir) {
+  const el = cardElements[cardCurrent];
+  el.classList.add(dir === 'left' ? 'fly-left' : 'fly-right');
+  setTimeout(() => {
+    cardCurrent = (cardCurrent + 1) % CARDS_DATA.length;
+    updateStack();
+  }, 380);
+}
+
+function addCardListeners() {
+  let sx = 0, sy = 0, dragging = false, delta = 0;
+  const topCard = () => cardElements[cardCurrent];
+
+  const onStart = (x, y) => { sx = x; sy = y; dragging = true; topCard().style.transition = 'none'; };
+  const onMove = (x) => {
+    if (!dragging) return;
+    delta = x - sx;
+    const rot = delta * 0.08;
+    topCard().style.transform = `translateX(${delta}px) rotate(${rot}deg)`;
+  };
+  const onEnd = () => {
+    if (!dragging) return;
+    dragging = false;
+    topCard().style.transition = '';
+    topCard().style.transform = '';
+    if (Math.abs(delta) > 40) throwCard(delta < 0 ? 'left' : 'right');
+    delta = 0;
+  };
+
+  stack.addEventListener('touchstart', e => onStart(e.touches[0].clientX, e.touches[0].clientY), {passive:true});
+  stack.addEventListener('touchmove', e => onMove(e.touches[0].clientX), {passive:true});
+  stack.addEventListener('touchend', onEnd);
+  stack.addEventListener('mousedown', e => onStart(e.clientX, e.clientY));
+  window.addEventListener('mousemove', e => { if(dragging) onMove(e.clientX); });
+  window.addEventListener('mouseup', onEnd);
+}
+
+buildDeck();
+
+// ══ WEATHER via Open-Meteo ══
+let weatherLoaded = false;
+const WMO = {
+  0:'☀️',1:'🌤',2:'⛅',3:'☁️',
+  45:'🌫',48:'🌫',
+  51:'🌦',53:'🌦',55:'🌧',
+  61:'🌧',63:'🌧',65:'🌧',
+  71:'🌨',73:'🌨',75:'❄️',
+  80:'🌦',81:'🌧',82:'⛈',
+  95:'⛈',96:'⛈',99:'⛈'
+};
+const WMO_TEXT = {
+  0:'Klarvær',1:'Lettskyet',2:'Delvis skyet',3:'Overskyet',
+  45:'Tåke',48:'Rimtåke',
+  51:'Yr',53:'Yr',55:'Lett regn',
+  61:'Regn',63:'Moderat regn',65:'Kraftig regn',
+  80:'Regnbyger',81:'Regnbyger',82:'Kraftige byger',
+  95:'Tordenvær',96:'Tordenvær',99:'Tordenvær'
+};
+const DAYS_NO = ['Søn','Man','Tir','Ons','Tor','Fre','Lør'];
+const MONTHS_NO = ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
+
+async function loadWeather() {
+  if (weatherLoaded) return;
+  const el = document.getElementById('weather-content');
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=46.55&longitude=17.67&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weathercode,windspeed_10m_max&timezone=Europe%2FBudapest&start_date=2026-06-08&end_date=2026-06-12';
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('API feil');
+    const d = await r.json();
+    const daily = d.daily;
+    let html = '<div class="forecast-grid">';
+    daily.time.forEach((t, i) => {
+      const date = new Date(t);
+      const wd = DAYS_NO[date.getDay()];
+      const dd = date.getDate();
+      const mo = MONTHS_NO[date.getMonth()];
+      const wc = daily.weathercode[i];
+      const icon = WMO[wc] || '🌡';
+      const desc = WMO_TEXT[wc] || '';
+      const hi = Math.round(daily.temperature_2m_max[i]);
+      const lo = Math.round(daily.temperature_2m_min[i]);
+      const rain = daily.precipitation_probability_max[i];
+      const wind = Math.round(daily.windspeed_10m_max[i]);
+      html += `<div class="fc-day">
+        <div class="fc-date"><div>${wd} ${dd}. ${mo}</div><div class="wd">${desc}</div></div>
+        <div class="fc-icon">${icon}</div>
+        <div class="fc-temps"><span class="hi">${hi}°</span><span class="lo">/${lo}°</span></div>
+        <div class="fc-extra">💧 ${rain}%<br>💨 ${wind} km/t</div>
+      </div>`;
+    });
+    html += '</div><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:.05em;text-align:right;margin-bottom:12px;">Kilde: Open-Meteo · oppdateres automatisk</div>';
+    el.innerHTML = html;
+    weatherLoaded = true;
+  } catch(e) {
+    el.innerHTML = '<div class="w-error">Kunne ikke hente værvarselet akkurat nå.<br>Sjekk Yr.no via lenken under.</div>';
+  }
+}
+
+// EASTER EGG SPIN
+const style = document.createElement('style');
+style.textContent = '@keyframes spin{0%{transform:rotate(0)scale(1)}50%{transform:rotate(360deg)scale(1.4)}100%{transform:rotate(720deg)scale(1)}}';
+document.head.appendChild(style);
+</script>
+</body>
+</html>
